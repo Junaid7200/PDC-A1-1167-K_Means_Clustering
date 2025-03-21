@@ -84,7 +84,7 @@ int main() {
         changed = 0;
         // Assignment Step: assign each point to the nearest centroid.
         // in the following loop, we are accessing the data points (rows of the 2D array you can say) and hence we can use diff threads to access these data points separately, so parallel for can be used here:
-        #pragma omp parallel for private(j) reduction(|:changed) schedule(static)    // STATIC SCHEDULING IMPLEMENTED
+        #pragma omp parallel for private(j) reduction(|:changed) schedule(static, 500000)    // STATIC SCHEDULING IMPLEMENTED
         for (i = 0; i < NUM_POINTS; i++) {  // ASSIGNMENT STEP
             int best_cluster = 0;   
             double best_dist = distance_sq(data[i], centroids[0]);  // no race condition here since its local, and no race condition on i either since the for directive takes care of that on its own.
